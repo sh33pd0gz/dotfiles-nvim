@@ -32,22 +32,14 @@ return {
 		"mfussenegger/nvim-jdtls",
 		dependencies = {
 			"mfussenegger/nvim-dap",
-			"rcarriga/nvim-dap-ui",
-			"nvim-neotest/nvim-nio",
 		},
 		config = function()
 			local dap = require("dap")
-			local dapui = require("dapui")
-			-- setup dap and dap-ui
-			dapui.setup()
-			dap.listeners.before.launch.dapui_config = function()
-				dapui.open()
-			end
 
 			-- keymaps
 			vim.keymap.set("n", "<leader>dt", dap.toggle_breakpoint, { desc = "[d]ebug [t]oggle breakpoint" })
 			vim.keymap.set("n", "<leader>ds", dap.continue, { desc = "[D]ebug [S]tart" })
-			vim.keymap.set("n", "<leader>dc", dapui.close, { desc = "[D]ebug [C]lose" })
+			-- vim.keymap.set("n", "<leader>dc", dapui.close, { desc = "[D]ebug [C]lose" })
 		end,
 	},
 	{

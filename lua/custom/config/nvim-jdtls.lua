@@ -9,23 +9,20 @@ local function get_jdtls()
 	return launcher, config, lombok
 end
 
--- local function get_bundles()
---     local mason_registry = require("mason-registry")
---     -- Setup java-debug-adapter
---     local java_debug = mason_registry.get_package "java-debug-adapter"
---     local java_debug_path = java_debug:get_install_path()
---     local bundles = {
---         vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar", true)
---     }
---     -- Setup java-test
---     local java_test = mason_registry.get_package "java-test"
---     local java_test_path = java_test:get_install_path()
---     vim.list_extend(
---         bundles,
---         vim.split(vim.fn.glob(java_test_path .. "/extension/server/*.jar", true), "\n")
---     )
---     return bundles
--- end
+local function get_bundles()
+	local mason_registry = require("mason-registry")
+	-- Setup java-debug-adapter
+	local java_debug = mason_registry.get_package("java-debug-adapter")
+	local java_debug_path = java_debug:get_install_path()
+	local bundles = {
+		vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar", true),
+	}
+	-- Setup java-test
+	local java_test = mason_registry.get_package("java-test")
+	local java_test_path = java_test:get_install_path()
+	vim.list_extend(bundles, vim.split(vim.fn.glob(java_test_path .. "/extension/server/*.jar", true), "\n"))
+	return bundles
+end
 
 local function get_workspace()
 	local home = os.getenv("HOME")
@@ -64,11 +61,11 @@ local function java_keymaps()
 	vim.keymap.set("n", "<leader>Ju", "<cmd> JstUpdateConfig<CR> ", { desc = "[J]ava [u]pdate config" })
 end
 
-local function setup_jdtls()
+local function get_config()
 	local jdtls = require("jdtls")
 	local launcher, os_config, lombok = get_jdtls()
 	local workspace_dir = get_workspace()
-	-- local bundles = get_bundles()
+	local bundles = get_bundles()
 	local root_dir = jdtls.setup.find_root({ ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" })
 	-- configure capabilities
 	local capabilities = {
@@ -116,7 +113,7 @@ local function setup_jdtls()
 	}
 
 	local init_options = {
-		-- bundles = bundles,
+		bundles = bundles,
 		extendedClientCapabilities = extendedClientCapabilities,
 	}
 
@@ -126,10 +123,10 @@ local function setup_jdtls()
 			format = {
 				enabled = true,
 				-- Google Style Guide
-				-- settings = {
-				-- 	url = vim.fn.stdpath("config") .. "/lang_servers/intellij-java-google-style.xml",
-				-- 	profile = "GoogleStyle",
-				-- },
+				settings = {
+					url = vim.fn.stdpath("config") .. "/lang_servers/intellij-java-google-style.xml",
+					profile = "GoogleStyle",
+				},
 			},
 			eclipse = {
 				downloadSource = true,
@@ -208,9 +205,7 @@ local function setup_jdtls()
 
 	local on_attach = function(_, bufnr)
 		java_keymaps()
-		-- require("jdtls").setup_dap()
-		-- require("jdtls.dap").setup_dap_main_class_configs()
-		-- require("jdtls.setup").add_commands() -- Deprecated
+		require("jdtls.dap").setup_dap_main_class_configs()
 		vim.lsp.codelens.refresh()
 
 		vim.api.nvim_create_autocmd("BufWritePost", {
@@ -221,7 +216,7 @@ local function setup_jdtls()
 		})
 	end
 
-	local config = {
+	return {
 		cmd = cmd,
 		root_dir = root_dir,
 		settings = settings,
@@ -229,10 +224,8 @@ local function setup_jdtls()
 		init_options = init_options,
 		on_attach = on_attach,
 	}
-
-	require("jdtls").start_or_attach(config)
 end
 
 return {
-	setup_jdtls = setup_jdtls(),
+	get_config = get_config(),
 }
