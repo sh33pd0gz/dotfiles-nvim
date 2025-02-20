@@ -1,6 +1,5 @@
-
 -- Preview substitutions live, as you type!
-vim.opt.inccommand = 'split'
+vim.opt.inccommand = "split"
 
 -- line numbers (with relative)
 vim.opt.number = true
@@ -26,8 +25,6 @@ vim.opt.smartindent = true
 vim.opt.breakindent = true
 vim.opt.expandtab = true
 
-
-
 vim.opt.cursorline = true
 vim.opt.conceallevel = 0 -- show concealed characters in markdown
 vim.opt.mouse = "a"
@@ -36,13 +33,11 @@ vim.opt.termguicolors = true
 vim.opt.timeoutlen = 1000 -- 1 second
 vim.opt.undofile = true -- persistent undos
 vim.opt.updatetime = 100 -- quick autocompletion
-vim.opt.writebackup = false -- prevent editing of files being edited elsewhere
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.schedule(function()
-  vim.opt.clipboard = 'unnamedplus'
+	vim.opt.clipboard = "unnamedplus"
 end)
-

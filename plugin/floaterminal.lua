@@ -57,7 +57,7 @@ local toggle_terminal = function()
 		if vim.bo[state.floating.buf].buftype ~= "terminal" then
 			vim.cmd.terminal()
 		end
-            vim.cmd("startinsert")  
+		vim.cmd("startinsert")
 	else
 		vim.api.nvim_win_hide(state.floating.win)
 	end
@@ -66,4 +66,3 @@ end
 -- Keymaps and User-commands
 vim.api.nvim_create_user_command("Floaterminal", toggle_terminal, {})
 vim.keymap.set({ "n", "t" }, "<space>tt", toggle_terminal, { desc = "Toggle floating terminal" })
-
