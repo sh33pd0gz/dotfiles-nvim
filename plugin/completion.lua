@@ -1,3 +1,5 @@
+vim.pack.add({ "https://github.com/nvim-mini/mini.completion" })
+
 require("mini.completion").setup({
     lsp_completion = {
         process_items = function(items, base)

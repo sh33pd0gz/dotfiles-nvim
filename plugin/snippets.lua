@@ -1,3 +1,8 @@
+vim.pack.add({
+    "https://github.com/nvim-mini/mini.snippets",
+    "https://github.com/rafamadriz/friendly-snippets",
+})
+
 local snippets = require("mini.snippets")
 
 snippets.setup({

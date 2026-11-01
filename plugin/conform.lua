@@ -1,3 +1,5 @@
+vim.pack.add({ "https://github.com/stevearc/conform.nvim" })
+
 ---@type conform.FormatterConfig
 require("conform").setup({
     format_on_save = {

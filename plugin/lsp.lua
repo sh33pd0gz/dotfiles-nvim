@@ -1,3 +1,7 @@
+vim.pack.add({
+    "https://github.com/neovim/nvim-lspconfig",
+})
+
 -- configure autocomplete
 local on_attach = function(args)
     vim.bo[args.buf].omnifunc = "v:lua.MiniCompletion.completefunc_lsp"

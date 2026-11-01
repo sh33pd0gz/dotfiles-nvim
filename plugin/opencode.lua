@@ -1,3 +1,5 @@
+vim.pack.add({ "https://github.com/nickjvandyke/opencode.nvim" })
+
 -- TODO
 -- 1. customize options
 -- 2. move keymaps to `20_keymaps.lua` file
